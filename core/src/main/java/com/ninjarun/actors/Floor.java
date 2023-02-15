@@ -29,7 +29,7 @@ public class Floor {
 
     private void addFixture(){
         EdgeShape edge = new EdgeShape();
-        edge.set(-3,0,WORLD_WIDTH,0);
+        edge.set(-3,-0.8f,WORLD_WIDTH,-0.8f);
         fixture = body.createFixture(edge, 3);
         fixture.setUserData(USER_FLOOR);
         edge.dispose();

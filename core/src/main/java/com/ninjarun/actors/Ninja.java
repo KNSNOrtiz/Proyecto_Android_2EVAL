@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -21,7 +22,7 @@ public class Ninja extends Actor {
 
     //  En lugar de usar constantes individuales, para mayor comodidad voy a usar un ENUM en el que voy a recoger todos los posibles estados
     //  del personaje principal, para poder determinar con facilidad la animación o acción a usar/ejecutar.
-    enum NinjaState {
+    public enum NinjaState {
         IDLE, RUNNING
     }
 
@@ -32,14 +33,13 @@ public class Ninja extends Actor {
     private Animation<TextureRegion> currentAnimation;
 
     //  PROPIEDADES PRINCIPALES DEL ACTOR
-    private final float NINJA_WIDTH = WORLD_WIDTH/7;
-    private final float NINJA_HEIGHT = WORLD_HEIGHT/7;
-    private final float NINJA_RUNNING_WIDTH = WORLD_WIDTH/5;
-    private NinjaState currentState;
-    private float speed = 2.5f;
+    private final float NINJA_WIDTH = WORLD_WIDTH/14;
+    private final float NINJA_HEIGHT = WORLD_HEIGHT/14;
+    private final float NINJA_RUNNING_WIDTH = WORLD_WIDTH/9;
+    private float speed = 3.5f;
     private float currentWidth;
     private World world;
-    private Body body;
+    public Body body;
     private Fixture fixture;
     private Vector2 position;
     private float stateTime = 0f;  //  StateTime es el tiempo acumulado de Delta, necesario para determinar el frame de la animación que se muestra.
@@ -48,20 +48,19 @@ public class Ninja extends Actor {
         assetMan = new AssetMan();
         this.position = position;
         this.world = world;
-        currentState = NinjaState.IDLE;
         idleAnimation = assetMan.getNinjaIdle();
         runAnimation = assetMan.getNinjaRun();
         addBody();
         addFixture();
-        loadState();
+        startIdle();
     }
 
     private void addBody(){
         BodyDef bodyDef = new BodyDef();
-        bodyDef.fixedRotation = true;
         bodyDef.position.set(position);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(bodyDef);
+        body.setFixedRotation(true);
     }
 
     private void addFixture(){
@@ -72,28 +71,23 @@ public class Ninja extends Actor {
         shape.dispose();
     }
 
-    private void loadState() {
-       switch (currentState){
-           case IDLE:
-               currentAnimation = idleAnimation;
-               startIdle();
-               break;
-           case RUNNING:
-               currentAnimation = runAnimation;
-
-               startRunning();
-               break;
-       }
-    }
-    private void startRunning(){
+    public void startRunning(){
         currentWidth = NINJA_RUNNING_WIDTH;
+        currentAnimation = runAnimation;
         body.setLinearVelocity(speed,0f);
+        System.out.println("Velocidad actual: " + body.getLinearVelocity().x);
     }
 
-    private void startIdle(){
+    public void startIdle(){
         currentWidth = NINJA_WIDTH;
+        currentAnimation = idleAnimation;
         body.setLinearVelocity(0f,0f);
     }
+
+    public Vector2 getBodyPosition(){
+        return body.getPosition();
+    }
+
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
@@ -104,13 +98,5 @@ public class Ninja extends Actor {
 
     @Override
     public void act(float delta) {
-        if (Gdx.input.justTouched()){
-            if (currentState == NinjaState.IDLE)
-                currentState = NinjaState.RUNNING;
-            else
-                currentState = NinjaState.IDLE;
-            loadState();
-        }
-
     }
 }

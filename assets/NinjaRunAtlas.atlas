@@ -1,159 +1,166 @@
 
 NinjaRunAtlas.png
-size: 3467, 2138
+size: 2372, 3058
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
 background
   rotate: false
-  xy: 2, 2
+  xy: 2, 922
   size: 2134, 2134
   orig: 2134, 2134
   offset: 0, 0
   index: -1
+bridge
+  rotate: false
+  xy: 1827, 6
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 idle0
   rotate: false
-  xy: 3102, 777
+  xy: 2138, 1735
   size: 232, 439
   orig: 232, 439
   offset: 0, 0
   index: -1
 idle2
   rotate: false
-  xy: 3233, 1697
+  xy: 2138, 2617
   size: 232, 439
   orig: 232, 439
   offset: 0, 0
   index: -1
 idle8
   rotate: false
-  xy: 3233, 1697
+  xy: 2138, 2617
   size: 232, 439
   orig: 232, 439
   offset: 0, 0
   index: -1
 idle4
   rotate: false
-  xy: 3233, 1256
+  xy: 2138, 2176
   size: 232, 439
   orig: 232, 439
   offset: 0, 0
   index: -1
 idle6
   rotate: false
-  xy: 3233, 1256
+  xy: 2138, 2176
   size: 232, 439
   orig: 232, 439
   offset: 0, 0
   index: -1
 idle5
   rotate: false
-  xy: 3102, 336
+  xy: 2138, 1294
   size: 232, 439
   orig: 232, 439
   offset: 0, 0
   index: -1
 idle7
   rotate: false
-  xy: 2868, 777
+  xy: 1827, 481
   size: 232, 439
   orig: 232, 439
   offset: 0, 0
   index: -1
 idle3
   rotate: false
-  xy: 2868, 777
+  xy: 1827, 481
   size: 232, 439
   orig: 232, 439
   offset: 0, 0
   index: -1
 idle9
   rotate: false
-  xy: 2868, 336
+  xy: 1827, 40
   size: 232, 439
   orig: 232, 439
   offset: 0, 0
   index: -1
 idle1
   rotate: false
-  xy: 2868, 336
+  xy: 1827, 40
   size: 232, 439
   orig: 232, 439
   offset: 0, 0
   index: -1
 platform
   rotate: false
-  xy: 2138, 168
+  xy: 2061, 792
   size: 64, 128
   orig: 64, 128
   offset: 0, 0
   index: -1
 run0
   rotate: false
-  xy: 2138, 1678
+  xy: 2, 462
   size: 363, 458
   orig: 363, 458
   offset: 0, 0
   index: -1
 run1
   rotate: false
-  xy: 2138, 298
+  xy: 1097, 462
   size: 363, 458
   orig: 363, 458
   offset: 0, 0
   index: -1
 run2
   rotate: false
-  xy: 2503, 1678
+  xy: 367, 462
   size: 363, 458
   orig: 363, 458
   offset: 0, 0
   index: -1
 run3
   rotate: false
-  xy: 2868, 1218
+  xy: 1462, 462
   size: 363, 458
   orig: 363, 458
   offset: 0, 0
   index: -1
 run4
   rotate: false
-  xy: 2503, 1218
+  xy: 732, 462
   size: 363, 458
   orig: 363, 458
   offset: 0, 0
   index: -1
 run5
   rotate: false
-  xy: 2138, 1218
+  xy: 2, 2
   size: 363, 458
   orig: 363, 458
   offset: 0, 0
   index: -1
 run6
   rotate: false
-  xy: 2503, 758
+  xy: 1097, 2
   size: 363, 458
   orig: 363, 458
   offset: 0, 0
   index: -1
 run7
   rotate: false
-  xy: 2138, 758
+  xy: 367, 2
   size: 363, 458
   orig: 363, 458
   offset: 0, 0
   index: -1
 run8
   rotate: false
-  xy: 2503, 298
+  xy: 1462, 2
   size: 363, 458
   orig: 363, 458
   offset: 0, 0
   index: -1
 run9
   rotate: false
-  xy: 2868, 1678
+  xy: 732, 2
   size: 363, 458
   orig: 363, 458
   offset: 0, 0

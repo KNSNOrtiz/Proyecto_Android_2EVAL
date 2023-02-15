@@ -26,6 +26,8 @@ public abstract class AbstractScreen implements Screen {
     //  el mundo ocupará toda la pantalla, las plataformas son generadas fuera del mundo.
     protected FitViewport fitViewport;
 
+
+
     public AbstractScreen(){
         mainGame = new MainGame();
         screenMan = new ScreenMan(mainGame);

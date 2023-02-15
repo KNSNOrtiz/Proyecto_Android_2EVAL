@@ -34,6 +34,7 @@ public class AssetMan {
     public TextureRegion getPlatform(){
         return textureAtlas.findRegion(PLATFORM);
     }
+    public TextureRegion getBridge(){return textureAtlas.findRegion(BRIDGE);}
 
     // ANIMACIONES
 
