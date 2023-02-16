@@ -11,8 +11,12 @@ import static com.ninjarun.Utils.RUN_7;
 import static com.ninjarun.Utils.RUN_8;
 import static com.ninjarun.Utils.RUN_9;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -23,6 +27,11 @@ public class AssetMan {
     public AssetMan(){
         assetManager = new AssetManager();
         assetManager.load(NR_ATLAS, TextureAtlas.class);
+        assetManager.load(SOUND_SCORE, Sound.class);
+        assetManager.load(SOUND_FALL, Sound.class);
+        assetManager.load(SOUND_RUN, Sound.class);
+        assetManager.load(SOUND_BUILD, Music.class);
+        assetManager.load(BGM_GAME, Music.class);
         assetManager.finishLoading();
         textureAtlas = assetManager.get(NR_ATLAS);
     }
@@ -31,10 +40,48 @@ public class AssetMan {
     public TextureRegion getBackground(){
         return textureAtlas.findRegion(BACKGROUND);
     }
+    public TextureRegion getLogoImage(){
+        return textureAtlas.findRegion(LOGO_IMG);
+    }
+    public TextureRegion getFooterImage(){
+        return textureAtlas.findRegion(FOOTER_IMG);
+    }
+    public TextureRegion getGameOverImage(){
+        return textureAtlas.findRegion(BTN_START);
+    }
+    public TextureRegion getStartButton(){
+        return textureAtlas.findRegion(BTN_START);
+    }
+    public TextureRegion getExitButton(){
+        return textureAtlas.findRegion(BTN_EXIT);
+    }
+
     public TextureRegion getPlatform(){
         return textureAtlas.findRegion(PLATFORM);
     }
     public TextureRegion getBridge(){return textureAtlas.findRegion(BRIDGE);}
+
+    //  FUENTE
+    public BitmapFont getFont(){
+        return new BitmapFont(Gdx.files.internal(FONT_FNT),Gdx.files.internal(FONT_PNG), false);
+    }
+
+    //  SONIDOS
+    public Sound getScoreSound(){
+        return assetManager.get(SOUND_SCORE);
+    }
+    public Sound getFallSound(){
+        return assetManager.get(SOUND_FALL);
+    }
+    public Sound getRunSound(){
+        return assetManager.get(SOUND_RUN);
+    }
+    public Music getBuildSound(){
+        return assetManager.get(SOUND_BUILD);
+    }
+    public Music getGameBGM(){
+        return assetManager.get(BGM_GAME);
+    }
 
     // ANIMACIONES
 

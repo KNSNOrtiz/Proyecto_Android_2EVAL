@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -33,10 +32,10 @@ public class Ninja extends Actor {
     private Animation<TextureRegion> currentAnimation;
 
     //  PROPIEDADES PRINCIPALES DEL ACTOR
-    private final float NINJA_WIDTH = WORLD_WIDTH/14;
-    private final float NINJA_HEIGHT = WORLD_HEIGHT/14;
-    private final float NINJA_RUNNING_WIDTH = WORLD_WIDTH/9;
-    private float speed = 3.5f;
+    private final float NINJA_WIDTH = WORLD_WIDTH/20;
+    private final float NINJA_HEIGHT = WORLD_HEIGHT/20;
+    private final float NINJA_RUNNING_WIDTH = WORLD_WIDTH/17;
+    private float speed = 2f;
     private float currentWidth;
     private World world;
     public Body body;
@@ -65,8 +64,9 @@ public class Ninja extends Actor {
 
     private void addFixture(){
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(NINJA_WIDTH/2, NINJA_HEIGHT/2);
+        shape.setAsBox(NINJA_WIDTH/100, NINJA_HEIGHT/2);
         fixture = body.createFixture(shape, 8);
+        fixture.setFriction(0);
         fixture.setUserData(USER_NINJA);
         shape.dispose();
     }
@@ -75,7 +75,6 @@ public class Ninja extends Actor {
         currentWidth = NINJA_RUNNING_WIDTH;
         currentAnimation = runAnimation;
         body.setLinearVelocity(speed,0f);
-        System.out.println("Velocidad actual: " + body.getLinearVelocity().x);
     }
 
     public void startIdle(){
@@ -98,5 +97,6 @@ public class Ninja extends Actor {
 
     @Override
     public void act(float delta) {
+
     }
 }

@@ -19,9 +19,9 @@ import com.ninjarun.managers.AssetMan;
 
 public class Platform extends Actor {
 
-    private final float MIN_WIDTH = WORLD_WIDTH/8f;
-    private final float MAX_WIDTH = WORLD_WIDTH/3f;
-    private float platformWidth = MAX_WIDTH;
+    private final float MIN_WIDTH = WORLD_WIDTH/18f;
+    private final float MAX_WIDTH = WORLD_WIDTH/6f;
+    private float platformWidth;
     private float platformHeight = WORLD_HEIGHT / 3f;
 
     private AssetMan assetMan;
@@ -32,7 +32,7 @@ public class Platform extends Actor {
     public Body body;
     public Body counterBody;
 
-    private Fixture containerFixture;
+    private Fixture counterFixture;
     private Fixture fixture;
 
     public Platform(Vector2 position, World world, boolean isFirst){
@@ -66,14 +66,13 @@ public class Platform extends Actor {
 
     private void addCounter(){
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(position.x + 0.35f, position.y+1.5f);
+        bodyDef.position.set(body.getPosition().x, position.y+1.24f);
         bodyDef.type = BodyDef.BodyType.KinematicBody;
         counterBody = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(0.1f, 0.1f);
-        containerFixture = counterBody.createFixture(shape, 8);
-        this.containerFixture.setSensor(true);
-        containerFixture.setUserData(USER_COUNTER);
+        shape.setAsBox(platformWidth/2.8f, 0.1f);
+        counterFixture = counterBody.createFixture(shape, 8);
+        counterFixture.setUserData(USER_COUNTER);
         shape.dispose();
     }
 
@@ -81,18 +80,9 @@ public class Platform extends Actor {
         return body;
     }
 
-    public Body getCounterBody() {
-        return counterBody;
+    public float getPlatformWidth() {
+        return platformWidth;
     }
-
-    public boolean isOutOfScreen(){
-        if (body.getPosition().x <= -(platformWidth))
-            return true;
-        else{
-            return false;
-        }
-    }
-
 
 
     @Override
@@ -113,6 +103,16 @@ public class Platform extends Actor {
         } else{
             System.out.println("El mundo está locked.");
         }
+    }
+    public void detachCounter(){
+        if (!world.isLocked()){
+            if (counterBody != null){
+                this.counterBody.destroyFixture(counterFixture);
+                this.world.destroyBody(counterBody);
+            }
 
+        } else{
+            System.out.println("El mundo está locked.");
+        }
     }
 }

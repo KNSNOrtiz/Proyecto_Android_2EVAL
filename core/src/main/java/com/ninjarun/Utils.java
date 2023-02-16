@@ -20,18 +20,23 @@ public class Utils {
     public static final String USER_BRIDGE = "bridge";
     public static final String USER_COUNTER = "counter";
 
-    //  Creamos una lista de los body/fixtures que vamos a eliminar en las iteraciones del mundo,
-    //  ya que de quitar algunos (como el del puente) mientras se dan colisiones provoca que el juego
-    //  cierre.
-    public static ArrayList<Fixture> fixtureList = new ArrayList<>();
 
     //  OTROS
-    public static final int FPS_TARGET = 60;    //  Para calcular el tiempo de las animaciones
+    public static final String FONT_FNT = "NRFont.fnt";
+    public static final String FONT_PNG = "NRFont.png";
+
+
 
     //  SPRITES
     public static final String NR_ATLAS = "NinjaRunAtlas.atlas";
-
     public static final String BACKGROUND = "background";
+    public static final String LOGO_IMG = "logo";
+    public static final String FOOTER_IMG = "footer.png";
+    public static final String GAMEOVER_IMG  = "gameover";
+    public static final String BTN_START = "button_start";
+    public static final String BTN_EXIT  = "button_exit";
+
+
     public static final String PLATFORM = "platform";
     public static final String BRIDGE = "bridge";
 
@@ -56,6 +61,15 @@ public class Utils {
     public static final String RUN_7 = "run7";
     public static final String RUN_8 = "run8";
     public static final String RUN_9 = "run9";
+
+
+    //  SONIDOS + MÚSICA
+    public static final String SOUND_SCORE = "score.mp3";
+    public static final String SOUND_BUILD = "build.mp3";
+    public static final String SOUND_RUN = "run.mp3";
+    public static final String SOUND_FALL = "fall.mp3";
+    public static final String BGM_GAME = "bgm_game.mp3";
+
 
 
 }

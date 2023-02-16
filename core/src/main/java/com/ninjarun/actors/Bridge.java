@@ -1,17 +1,15 @@
 package com.ninjarun.actors;
 
 import static com.ninjarun.Utils.USER_BRIDGE;
-import static com.ninjarun.Utils.USER_FLOOR;
-import static com.ninjarun.Utils.USER_NINJA;
 import static com.ninjarun.Utils.WORLD_HEIGHT;
 import static com.ninjarun.Utils.WORLD_WIDTH;
-import static com.ninjarun.Utils.fixtureList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -20,15 +18,16 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.ninjarun.MainGame;
 import com.ninjarun.managers.AssetMan;
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 
 public class Bridge extends Actor {
 
     AssetMan assetMan;
 
     private final float WIDTH = 0.05f;
-    private final float MAX_HEIGHT = WORLD_HEIGHT;
+    private final float MAX_HEIGHT = WORLD_WIDTH -0.25f;
     private float currentHeight;
     private TextureRegion sprite;
 
@@ -40,6 +39,8 @@ public class Bridge extends Actor {
     private boolean isBuilding;
     private boolean isBuilt;
 
+    private Music buildSound;   //  Se carga como música para poder gestionar su estado (si está sonando, se para; si no, reproducirlo...)
+
 
     public Bridge(World world, Vector2 position, Ninja ninja) {
         this.assetMan = new AssetMan();
@@ -47,9 +48,10 @@ public class Bridge extends Actor {
         this.world = world;
         this.position = position;
         this.ninja = ninja;
+        this.buildSound = this.assetMan.getBuildSound();
         this.isBuilding = false;
         this.isBuilt = false;
-        Gdx.input.setInputProcessor(new InputAdapter(){
+        MainGame.inputMultiplexer.addProcessor(new InputAdapter(){
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
                 isBuilding = true;
@@ -58,8 +60,8 @@ public class Bridge extends Actor {
 
             @Override
             public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-                isBuilding = false;
                 isBuilt = true;
+                isBuilding = false;
                 return true;
             }
         });
@@ -68,13 +70,15 @@ public class Bridge extends Actor {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(position);
         bodyDef.type = BodyDef.BodyType.StaticBody;
-        body = world.createBody(bodyDef);
+        this.body = this.world.createBody(bodyDef);
+
     }
 
     private void addFixture(){
         EdgeShape edge = new EdgeShape();
+
         edge.set(getOriginX(), getOriginY()-0.01f, currentHeight, 0f);
-        fixture = body.createFixture(edge, 3);
+        fixture = body.createFixture(edge, 0);
         fixture.setUserData(USER_BRIDGE);
         edge.dispose();
     }
@@ -88,18 +92,23 @@ public class Bridge extends Actor {
     @Override
     public void act(float delta) {
         if (currentHeight < MAX_HEIGHT && isBuilding && !isBuilt){
-            currentHeight += 0.05f;
+            this.currentHeight += 0.05f;
+            if (!buildSound.isPlaying()){
+                this.buildSound.play();
+            }
         }
         else if(isBuilt){
             if (this.body == null && this.fixture == null){
                 if (this.getRotation() > -90f){
-                    System.out.println(this.getRotation());
                     this.setRotation(getRotation()-5f);
                 }
                 else{
+                    if (buildSound.isPlaying())
+                        buildSound.stop();
                     addBody();
                     addFixture();
                     ninja.startRunning();
+                    buildSound.play();
                 }
             }
 

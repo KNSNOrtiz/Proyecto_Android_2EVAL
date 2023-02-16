@@ -1,166 +1,201 @@
 
 NinjaRunAtlas.png
-size: 2372, 3058
+size: 3233, 2579
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
 background
   rotate: false
-  xy: 2, 922
+  xy: 2, 443
   size: 2134, 2134
   orig: 2134, 2134
   offset: 0, 0
   index: -1
 bridge
   rotate: false
-  xy: 1827, 6
+  xy: 2740, 2085
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
+button_exit
+  rotate: false
+  xy: 2138, 1975
+  size: 600, 300
+  orig: 600, 300
+  offset: 0, 0
+  index: -1
+button_start
+  rotate: false
+  xy: 1206, 141
+  size: 600, 300
+  orig: 600, 300
+  offset: 0, 0
+  index: -1
+footer.png
+  rotate: false
+  xy: 2138, 2277
+  size: 600, 300
+  orig: 600, 300
+  offset: 0, 0
+  index: -1
+gameover
+  rotate: false
+  xy: 2, 141
+  size: 600, 300
+  orig: 600, 300
+  offset: 0, 0
+  index: -1
 idle0
   rotate: false
-  xy: 2138, 1735
+  xy: 2744, 154
   size: 232, 439
   orig: 232, 439
   offset: 0, 0
   index: -1
 idle2
   rotate: false
-  xy: 2138, 2617
+  xy: 1808, 2
   size: 232, 439
   orig: 232, 439
   offset: 0, 0
   index: -1
 idle8
   rotate: false
-  xy: 2138, 2617
+  xy: 1808, 2
   size: 232, 439
   orig: 232, 439
   offset: 0, 0
   index: -1
 idle4
   rotate: false
-  xy: 2138, 2176
+  xy: 2276, 154
   size: 232, 439
   orig: 232, 439
   offset: 0, 0
   index: -1
 idle6
   rotate: false
-  xy: 2138, 2176
+  xy: 2276, 154
   size: 232, 439
   orig: 232, 439
   offset: 0, 0
   index: -1
 idle5
   rotate: false
-  xy: 2138, 1294
+  xy: 2978, 298
   size: 232, 439
   orig: 232, 439
   offset: 0, 0
   index: -1
 idle7
   rotate: false
-  xy: 1827, 481
+  xy: 2042, 2
   size: 232, 439
   orig: 232, 439
   offset: 0, 0
   index: -1
 idle3
   rotate: false
-  xy: 1827, 481
+  xy: 2042, 2
   size: 232, 439
   orig: 232, 439
   offset: 0, 0
   index: -1
 idle9
   rotate: false
-  xy: 1827, 40
+  xy: 2510, 154
   size: 232, 439
   orig: 232, 439
   offset: 0, 0
   index: -1
 idle1
   rotate: false
-  xy: 1827, 40
+  xy: 2510, 154
   size: 232, 439
   orig: 232, 439
   offset: 0, 0
   index: -1
+logo
+  rotate: false
+  xy: 604, 141
+  size: 600, 300
+  orig: 600, 300
+  offset: 0, 0
+  index: -1
 platform
   rotate: false
-  xy: 2061, 792
+  xy: 3105, 2449
   size: 64, 128
   orig: 64, 128
   offset: 0, 0
   index: -1
 run0
   rotate: false
-  xy: 2, 462
+  xy: 2740, 2119
   size: 363, 458
   orig: 363, 458
   offset: 0, 0
   index: -1
 run1
   rotate: false
-  xy: 1097, 462
+  xy: 2503, 595
   size: 363, 458
   orig: 363, 458
   offset: 0, 0
   index: -1
 run2
   rotate: false
-  xy: 367, 462
+  xy: 2138, 1055
   size: 363, 458
   orig: 363, 458
   offset: 0, 0
   index: -1
 run3
   rotate: false
-  xy: 1462, 462
+  xy: 2868, 1199
   size: 363, 458
   orig: 363, 458
   offset: 0, 0
   index: -1
 run4
   rotate: false
-  xy: 732, 462
+  xy: 2503, 1515
   size: 363, 458
   orig: 363, 458
   offset: 0, 0
   index: -1
 run5
   rotate: false
-  xy: 2, 2
+  xy: 2138, 1515
   size: 363, 458
   orig: 363, 458
   offset: 0, 0
   index: -1
 run6
   rotate: false
-  xy: 1097, 2
+  xy: 2868, 1659
   size: 363, 458
   orig: 363, 458
   offset: 0, 0
   index: -1
 run7
   rotate: false
-  xy: 367, 2
+  xy: 2138, 595
   size: 363, 458
   orig: 363, 458
   offset: 0, 0
   index: -1
 run8
   rotate: false
-  xy: 1462, 2
+  xy: 2868, 739
   size: 363, 458
   orig: 363, 458
   offset: 0, 0
   index: -1
 run9
   rotate: false
-  xy: 732, 2
+  xy: 2503, 1055
   size: 363, 458
   orig: 363, 458
   offset: 0, 0

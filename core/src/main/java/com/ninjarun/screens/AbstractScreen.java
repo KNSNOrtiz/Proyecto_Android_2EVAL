@@ -15,41 +15,10 @@ import com.ninjarun.managers.ScreenMan;
 //  Creamos una clase abstracta que implementa Screen
 public abstract class AbstractScreen implements Screen {
 
-    //  Declaramos los dos gestores que necesitaremos usar en todas las pantallas de nuestro juego.
-    protected MainGame mainGame;
-    protected ScreenMan screenMan;
-    protected AssetMan assetMan;
-    //  Todas las pantallas van a necesitar Stage para gestionar a los actores, así que declaramos ya una instancia.
-    protected Stage stage;
-    protected World world;
-    //  Stage necesita el viewport para poder instanciarse, así que declaramos un FitViewPort. He elegido este tipo de ViewPort porque
-    //  el mundo ocupará toda la pantalla, las plataformas son generadas fuera del mundo.
-    protected FitViewport fitViewport;
+    public MainGame mainGame;
 
-
-
-    public AbstractScreen(){
-        mainGame = new MainGame();
-        screenMan = new ScreenMan(mainGame);
-        assetMan = new AssetMan();
-        fitViewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
-        stage = new Stage(fitViewport);
-    }
-
-    //  Para evitar volver a escribir los métodos en las siguientes pantallas, definimos en la pantalla base los métodos necesarios para colocar
-    //  a los actores que vayan haciendo falta.
-
-
-    protected void addBackground(){
-        Image background = new Image(assetMan.getBackground());
-        background.setSize(WORLD_WIDTH, WORLD_HEIGHT);
-        background.setPosition(0,0);
-        stage.addActor(background);
-    }
-    protected void addFloor(){
-        if (world != null){
-            Floor floor = new Floor(world);
-        }
+    public AbstractScreen(MainGame mainGame){
+        this.mainGame = mainGame;
     }
 
 
