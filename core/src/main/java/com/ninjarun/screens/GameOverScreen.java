@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.ninjarun.MainGame;
 
+//  PANTALLA DE MUERTE. ESTA PANTALLA SE MUESTRA CADA VEZ QUE EL PERSONAJE CAE POR UN FOSO.
 public class GameOverScreen extends AbstractScreen{
 
     private Stage stage;
@@ -18,12 +19,14 @@ public class GameOverScreen extends AbstractScreen{
         super(mainGame);
         this.stage = new Stage(fitViewport);
     }
+    //  FONDO
     private void addBackground(){
         Image background = new Image(assetMan.getBackground());
         background.setSize(WORLD_WIDTH, WORLD_HEIGHT);
         background.setPosition(0,0);
         stage.addActor(background);
     }
+    //  IMAGEN DE GAMEOVER
     private void addGameOver(){
         Image image = new Image(assetMan.getGameOverImage());
         image.setSize(WORLD_WIDTH, WORLD_HEIGHT/3);

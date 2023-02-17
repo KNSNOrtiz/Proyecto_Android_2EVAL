@@ -1,9 +1,5 @@
 package com.ninjarun;
 
-import com.badlogic.gdx.physics.box2d.Fixture;
-
-import java.util.ArrayList;
-
 public class Utils {
 
     //  PROPIEDADES DEL MUNDO Y LA PANTALLA
@@ -13,7 +9,7 @@ public class Utils {
     public static final float WORLD_WIDTH = SCREEN_WIDTH/100f;
     public static final float WORLD_HEIGHT = SCREEN_HEIGHT/100f;
 
-    //  PROPIEDADES DE LOS ACTORES
+    //  ID DE LOS ACTORES (detección de  colisiones entre sus fixtures.)
     public static final String USER_NINJA = "ninja";
     public static final String USER_FLOOR = "floor";
     public static final String USER_PLATFORM = "platform";
@@ -21,7 +17,7 @@ public class Utils {
     public static final String USER_COUNTER = "counter";
 
 
-    //  OTROS
+    //  FUENTE
     public static final String FONT_FNT = "NRFont.fnt";
     public static final String FONT_PNG = "NRFont.png";
 
@@ -66,7 +62,6 @@ public class Utils {
     //  SONIDOS + MÚSICA
     public static final String SOUND_SCORE = "score.mp3";
     public static final String SOUND_BUILD = "build.mp3";
-    public static final String SOUND_RUN = "run.mp3";
     public static final String SOUND_FALL = "fall.mp3";
     public static final String BGM_GAME = "bgm_game.mp3";
 

@@ -21,18 +21,19 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class AssetMan {
-    AssetManager assetManager;
-    TextureAtlas textureAtlas;
+    AssetManager assetManager;  //  Instancia de AssetManager, la clase que gestiona los recursos del videojuego.
+    TextureAtlas textureAtlas;  //  TextureAtlas permite acceder a regiones del Atlas mediante el nombre de estas para obtener los sprites.
 
     public AssetMan(){
         assetManager = new AssetManager();
+        //  CARGA DE RECURSOS
         assetManager.load(NR_ATLAS, TextureAtlas.class);
         assetManager.load(SOUND_SCORE, Sound.class);
         assetManager.load(SOUND_FALL, Sound.class);
-        assetManager.load(SOUND_RUN, Sound.class);
         assetManager.load(SOUND_BUILD, Music.class);
         assetManager.load(BGM_GAME, Music.class);
         assetManager.finishLoading();
+        //  OBTENCIÓN DEL ATLAS
         textureAtlas = assetManager.get(NR_ATLAS);
     }
 
@@ -61,7 +62,7 @@ public class AssetMan {
     }
     public TextureRegion getBridge(){return textureAtlas.findRegion(BRIDGE);}
 
-    //  FUENTE
+    //  FUENTE EN FORMATO  BITMAP MEDIANTE LOS ARCHIVOS .FNT Y .PNG, PARA PODER USARSE EN EL JUEGO.
     public BitmapFont getFont(){
         return new BitmapFont(Gdx.files.internal(FONT_FNT),Gdx.files.internal(FONT_PNG), false);
     }
@@ -73,10 +74,7 @@ public class AssetMan {
     public Sound getFallSound(){
         return assetManager.get(SOUND_FALL);
     }
-    public Sound getRunSound(){
-        return assetManager.get(SOUND_RUN);
-    }
-    public Music getBuildSound(){
+    public Music getBuildSound(){   //  Este sonido es cargado como Music para facilitar su gestión.
         return assetManager.get(SOUND_BUILD);
     }
     public Music getGameBGM(){
@@ -84,7 +82,6 @@ public class AssetMan {
     }
 
     // ANIMACIONES
-
     public Animation<TextureRegion> getNinjaIdle(){
         Animation<TextureRegion> animation = new Animation<TextureRegion>(0.1f,
                 textureAtlas.findRegion(IDLE_0), textureAtlas.findRegion(IDLE_1),
