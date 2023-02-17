@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.ninjarun.MainGame;
 import com.ninjarun.managers.AssetMan;
 
 public class Ninja extends Actor {
@@ -98,5 +99,14 @@ public class Ninja extends Actor {
     @Override
     public void act(float delta) {
 
+    }
+
+    public void dispose(){
+        if (!world.isLocked()){
+            this.body.destroyFixture(fixture);
+            this.world.destroyBody(body);
+        } else{
+            System.out.println("El mundo está locked.");
+        }
     }
 }

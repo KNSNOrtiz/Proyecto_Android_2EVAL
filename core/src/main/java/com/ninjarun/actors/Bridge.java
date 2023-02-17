@@ -1,15 +1,14 @@
 package com.ninjarun.actors;
 
 import static com.ninjarun.Utils.USER_BRIDGE;
-import static com.ninjarun.Utils.WORLD_HEIGHT;
 import static com.ninjarun.Utils.WORLD_WIDTH;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -30,6 +29,7 @@ public class Bridge extends Actor {
     private final float MAX_HEIGHT = WORLD_WIDTH -0.25f;
     private float currentHeight;
     private TextureRegion sprite;
+    InputAdapter bridgeInput;
 
     private World world;
     private Body body;
@@ -51,20 +51,7 @@ public class Bridge extends Actor {
         this.buildSound = this.assetMan.getBuildSound();
         this.isBuilding = false;
         this.isBuilt = false;
-        MainGame.inputMultiplexer.addProcessor(new InputAdapter(){
-            @Override
-            public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-                isBuilding = true;
-                return true;
-            }
 
-            @Override
-            public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-                isBuilt = true;
-                isBuilding = false;
-                return true;
-            }
-        });
     }
     private void addBody(){
         BodyDef bodyDef = new BodyDef();
@@ -76,8 +63,7 @@ public class Bridge extends Actor {
 
     private void addFixture(){
         EdgeShape edge = new EdgeShape();
-
-        edge.set(getOriginX(), getOriginY()-0.01f, currentHeight, 0f);
+        edge.set(getOriginX(), getOriginY()-0.005f, currentHeight, 0f);
         fixture = body.createFixture(edge, 0);
         fixture.setUserData(USER_BRIDGE);
         edge.dispose();
@@ -91,8 +77,17 @@ public class Bridge extends Actor {
 
     @Override
     public void act(float delta) {
+        if (Gdx.input.isTouched()){
+            isBuilding = true;
+        }
+        else{
+            if (isBuilding){
+                isBuilt = true;
+                isBuilding = false;
+            }
+        }
         if (currentHeight < MAX_HEIGHT && isBuilding && !isBuilt){
-            this.currentHeight += 0.05f;
+            this.currentHeight += 0.03f;
             if (!buildSound.isPlaying()){
                 this.buildSound.play();
             }
@@ -108,6 +103,7 @@ public class Bridge extends Actor {
                     addBody();
                     addFixture();
                     ninja.startRunning();
+                    System.out.println("CONSTRUIDO");
                     buildSound.play();
                 }
             }
@@ -115,14 +111,15 @@ public class Bridge extends Actor {
         }
     }
 
-    public void detach(){
+    public void dispose(){
         if (!world.isLocked()){
+            System.out.println("ELIMINADO INPUT");
+            Gdx.input.setInputProcessor(null);
             this.body.destroyFixture(fixture);
             this.world.destroyBody(body);
         } else{
             System.out.println("El mundo está locked.");
         }
-
     }
 
 }

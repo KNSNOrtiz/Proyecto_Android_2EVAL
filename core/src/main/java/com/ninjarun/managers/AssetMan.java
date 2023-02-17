@@ -47,7 +47,7 @@ public class AssetMan {
         return textureAtlas.findRegion(FOOTER_IMG);
     }
     public TextureRegion getGameOverImage(){
-        return textureAtlas.findRegion(BTN_START);
+        return textureAtlas.findRegion(GAMEOVER_IMG);
     }
     public TextureRegion getStartButton(){
         return textureAtlas.findRegion(BTN_START);

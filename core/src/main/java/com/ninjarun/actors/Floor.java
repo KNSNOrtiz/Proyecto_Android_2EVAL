@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
+import com.ninjarun.MainGame;
 
 
 public class Floor {
@@ -33,6 +34,14 @@ public class Floor {
         fixture = body.createFixture(edge, 3);
         fixture.setUserData(USER_FLOOR);
         edge.dispose();
+    }
+    public void dispose(){
+        if (!world.isLocked()){
+            this.body.destroyFixture(fixture);
+            this.world.destroyBody(body);
+        } else{
+            System.out.println("El mundo está locked.");
+        }
     }
 
 }

@@ -1,5 +1,6 @@
 package com.ninjarun.screens;
 
+import static com.ninjarun.MainGame.assetMan;
 import static com.ninjarun.Utils.SCREEN_HEIGHT;
 import static com.ninjarun.Utils.SCREEN_WIDTH;
 import static com.ninjarun.Utils.USER_BRIDGE;
@@ -18,28 +19,20 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.ninjarun.MainGame;
 import com.ninjarun.actors.Bridge;
 import com.ninjarun.actors.Floor;
 import com.ninjarun.actors.Ninja;
 import com.ninjarun.actors.Platform;
-import com.ninjarun.managers.AssetMan;
-
-import jdk.tools.jmod.Main;
 
 
 public class MainScreen extends AbstractScreen implements ContactListener {
@@ -66,6 +59,7 @@ public class MainScreen extends AbstractScreen implements ContactListener {
     private boolean hasCrossed;
     private boolean areMoving;
     private boolean tooLong;
+    private boolean gameOver;
 
     //  Contador de puntuación
     private int counter = 0;
@@ -79,13 +73,14 @@ public class MainScreen extends AbstractScreen implements ContactListener {
 
     public MainScreen(MainGame mainGame) {
         super(mainGame);
-        FitViewport fitViewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
         this.stage = new Stage(fitViewport);
+        Gdx.input.setInputProcessor(null);
         this.debugRenderer = new Box2DDebugRenderer();
-        this.counterSound = this.mainGame.assetMan.getScoreSound();
-        this.fallSound =  this.mainGame.assetMan.getFallSound();
-        this.bgm = this.mainGame.assetMan.getGameBGM();
+        this.counterSound = assetMan.getScoreSound();
+        this.fallSound =  assetMan.getFallSound();
+        this.bgm = assetMan.getGameBGM();
         bgm.setVolume(0.2f);
+        bgm.setLooping(true);
         this.worldCamera = (OrthographicCamera)stage.getCamera();
         this.world = new World(new Vector2(0, -9.80665f), true);
         this.world.setContactListener(this); //  Establecemos el control de las colisiones en el mundo.
@@ -97,15 +92,15 @@ public class MainScreen extends AbstractScreen implements ContactListener {
         }
     }
     private void addBackground(){
-        Image background = new Image( this.mainGame.assetMan.getBackground());
+        Image background = new Image( assetMan.getBackground());
         background.setSize(WORLD_WIDTH, WORLD_HEIGHT);
         background.setPosition(0,0);
         stage.addActor(background);
     }
 
     private void addPlatforms(){
-        final float MAX_DISTANCE = 1.7f;
-        final float MIN_DISTANCE = 1.0f;
+        final float MAX_DISTANCE = WORLD_WIDTH/2f;
+        final float MIN_DISTANCE = WORLD_WIDTH/3f;
         float posX;
 
         for (int i = platforms.size; i < 3; i++) {
@@ -149,7 +144,7 @@ public class MainScreen extends AbstractScreen implements ContactListener {
                     platform.counterBody.setLinearVelocity(0f,0);
                 platform.body.setLinearVelocity(0f,0);
             }
-            platforms.get(0).detach();
+            platforms.get(0).dispose();
             platforms.get(0).remove();
             System.out.println("Borrando plataforma");
             platforms.removeValue(platforms.get(0),false);
@@ -162,7 +157,7 @@ public class MainScreen extends AbstractScreen implements ContactListener {
     }
 
     private void addCounter(){
-        this.counterFont =  this.mainGame.assetMan.getFont();
+        this.counterFont =  assetMan.getFont();
         this.counterFont.getData().scale(0.5f);    //  Escalado de la fuente
         this.counterFont.setColor(Color.BLACK);
         this.counterCamera = new OrthographicCamera();
@@ -181,8 +176,22 @@ public class MainScreen extends AbstractScreen implements ContactListener {
         this.bridge = new Bridge(world, new Vector2(platforms.get(0).body.getPosition().x + platforms.get(0).getPlatformWidth()/3,ninja.getBodyPosition().y -0.25f), ninja);
         this.stage.addActor(ninja);
         this.stage.addActor(bridge);
+
         addFloor();
         addCounter();
+    }
+    @Override
+    public void hide() {
+        super.hide();
+        //this.bridge.dispose();
+        this.ninja.dispose();
+
+    }
+
+    @Override
+    public void dispose() {
+        this.stage.dispose();
+        this.world.dispose();
     }
 
     @Override
@@ -191,6 +200,9 @@ public class MainScreen extends AbstractScreen implements ContactListener {
         //  Para evitar problemas a la hora de quitar el puente, uso una variable auxiliar que dice al juego cuándo tiene que borrar según qué elementos, y esto
         //  debe ser antes del step, motivo por el que coloco este código aquí. PostRunnable intenta que el código se haga fuera de cualquier step
         //  de World por si acaso.
+        if (gameOver){
+            mainGame.setScreen(new GameOverScreen(mainGame));
+        }
         if (areMoving){
             Gdx.app.postRunnable(new Runnable(){
                 @Override
@@ -203,9 +215,9 @@ public class MainScreen extends AbstractScreen implements ContactListener {
             Gdx.app.postRunnable(new Runnable(){
                 @Override
                 public void run() {
-                    bridge.detach();
+                    bridge.dispose();
                     bridge.remove();
-                    platforms.get(1).detachCounter();
+                    platforms.get(1).disposeCounter();
                     hasCrossed = false;
                 }
             });
@@ -214,7 +226,7 @@ public class MainScreen extends AbstractScreen implements ContactListener {
             Gdx.app.postRunnable(new Runnable(){
                 @Override
                 public void run() {
-                    platforms.get(1).detachCounter();
+                    platforms.get(1).disposeCounter();
                     tooLong = false;
                 }
             });
@@ -229,6 +241,8 @@ public class MainScreen extends AbstractScreen implements ContactListener {
         this.debugRenderer.render(world, worldCamera.combined);
     }
 
+
+
     //  Método para detectar las colisiones entre dos objetos.
     private boolean isCollision(Contact contact, Object objA, Object objB) {
         return (contact.getFixtureA().getUserData().equals(objA) && contact.getFixtureB().getUserData().equals(objB)) ||
@@ -241,7 +255,7 @@ public class MainScreen extends AbstractScreen implements ContactListener {
         if (isCollision(contact, USER_NINJA, USER_COUNTER)){
             hasCrossed = true;
             ninja.startIdle();
-            counterSound.play();
+            counterSound.play(0.5f);
             counter++;
             movePlatforms();
         }
@@ -254,6 +268,8 @@ public class MainScreen extends AbstractScreen implements ContactListener {
             if (bgm.isPlaying()){
                 bgm.stop();
             }
+            gameOver = true;
+
         }
     }
 
@@ -261,7 +277,6 @@ public class MainScreen extends AbstractScreen implements ContactListener {
     public void endContact(Contact contact) {
         if (isCollision(contact, USER_NINJA, USER_BRIDGE) && !hasCrossed){
             ninja.startIdle();
-
         }
     }
 

@@ -96,7 +96,7 @@ public class Platform extends Actor {
         super.act(delta);
     }
 
-    public void detach(){
+    public void dispose(){
         if (!world.isLocked()){
             this.body.destroyFixture(fixture);
             this.world.destroyBody(body);
@@ -104,7 +104,7 @@ public class Platform extends Actor {
             System.out.println("El mundo está locked.");
         }
     }
-    public void detachCounter(){
+    public void disposeCounter(){
         if (!world.isLocked()){
             if (counterBody != null){
                 this.counterBody.destroyFixture(counterFixture);
